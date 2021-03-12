@@ -43,7 +43,7 @@ async def hohol(ctx):
         source = FFmpegPCMAudio('hohol.mp3')
         player = voice.play(source)
     else:
-        await ctx.send('Зайди в голосовой, МУДИЛА!')
+        await ctx.send('в голосовой зайди ебло)')
 
 @bot.command(name='monke')
 async def randimg(ctx):
