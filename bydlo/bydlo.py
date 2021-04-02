@@ -1,32 +1,47 @@
 import discord
-import json
 import requests
 import random
 from discord.ext import commands
 from discord import FFmpegPCMAudio
 import asyncio
+import json
+import datetime
+from encoderrr import Message, MyEncoder
 
-# suka_json="""
-# {
-# "response":{
-#  "count": 53245
-#  }
-# }
-#  """
+images = ['6quii5Zg_400x400.jpg','M-YnMbnh_400x400.jpg', 'aMLNBRcbuSo.jpg']
 
+id_deb = [695330777545834647, 630864081468915741, 523383507888898050, 632572681757392896]
 
-
-
-
-
-# data = json.loads(suka_json)
-
-
-# with open('suka.json', 'w+') as file:
-#         json.dump(data,file)
-
+data = {"харча": []}
 
 bot = commands.Bot(command_prefix='>')
+
+
+@bot.event
+async def on_message(message):
+    split_message = message.content.split()
+    if len(split_message) == 0:
+        return None
+    msg = Message(message.author, message.content)
+    data["харча"].append(msg)
+    await bot.process_commands(message)
+
+
+
+@bot.event
+async def on_disconnect():
+    time = datetime.datetime.now()
+    print('bydlo disconnect at {}'.format(time))
+    with open('musor.json', 'w', encoding='utf-8') as file:
+        json.dump(data, file, cls=MyEncoder, indent=4, ensure_ascii=False)
+
+
+@bot.command(name='абоба')
+
+@commands.is_owner()
+async def bot_shutdown(ctx):
+    await ctx.bot.logout()
+
 
 @bot.event
 async def on_ready():
@@ -36,7 +51,7 @@ async def on_ready():
 
 @bot.command(pass_context=True)
 async def hohol(ctx):
-    if ctx.author.id == 695330777545834647:
+    if ctx.author.id in id_deb:
             await ctx.channel.send('соси')
     elif (ctx.author.voice):
         channel = ctx.message.author.voice.channel
@@ -45,25 +60,25 @@ async def hohol(ctx):
         player = voice.play(source)
         player.start()
         while not player.is_done():
-                await asyncio.sleep(10)
+                await asyncio.sleep(1)
         player.stop()
         await voice.disconnect()
     else:
         await ctx.send('в голосовой зайди ебло)')
 
+
 @bot.command(name='monke')
 async def randimg(ctx):
-    if ctx.author.id == 695330777545834647:
+    if ctx.author.id in id_deb:
             await ctx.channel.send('соси')
     else:
-        images = ['6quii5Zg_400x400.jpg','M-YnMbnh_400x400.jpg', 'aMLNBRcbuSo.jpg']
         random_image = random.choice(images)
         await ctx.send(file=discord.File(random_image))
 
 
 @bot.command()
 async def fox(ctx):
-    if ctx.author.id == 695330777545834647:
+    if ctx.author.id in id_deb:
             await ctx.channel.send('соси')
     else:
         response = requests.get('https://some-random-api.ml/img/fox')
@@ -76,7 +91,7 @@ async def fox(ctx):
 
 @bot.command()
 async def dog(ctx):
-    if ctx.author.id == 695330777545834647:
+    if ctx.author.id in id_deb:
             await ctx.channel.send('соси')
     else:
         response = requests.get('https://some-random-api.ml/img/dog') 
@@ -89,7 +104,7 @@ async def dog(ctx):
 
 @bot.command()
 async def саша(ctx):
-    if ctx.author.id == 695330777545834647:
+    if ctx.author.id in id_deb:
             await ctx.channel.send('соси')
     else:
         await ctx.send('лапочка)')
@@ -97,7 +112,7 @@ async def саша(ctx):
 
 @bot.command()
 async def казл(ctx):
-    if ctx.author.id == 695330777545834647:
+    if ctx.author.id in id_deb:
             await ctx.channel.send('соси')
     else:
         await ctx.send('лох')
@@ -105,10 +120,10 @@ async def казл(ctx):
 
 @bot.command()
 async def сифон(ctx):
-    if ctx.author.id == 695330777545834647:
+    if ctx.author.id in id_deb:
             await ctx.channel.send('соси')
     else:
         await ctx.send('сифонит ежи')
 
 
-bot.run('ODEzNzU3MTAzNzc1OTQwNjM4.YDT8XA.h251eBG6rA8xJUZNeQDMovFig4Q')
+bot.run('ODEzNzU3MTAzNzc1OTQwNjM4.YDT8XA.rejjhQ-e4kUAviT4CJyeAVrbil4')
