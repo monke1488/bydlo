@@ -126,4 +126,4 @@ async def сифон(ctx):
         await ctx.send('сифонит ежи')
 
 
-bot.run('ODEzNzU3MTAzNzc1OTQwNjM4.YDT8XA.rejjhQ-e4kUAviT4CJyeAVrbil4')
+bot.run('token')
